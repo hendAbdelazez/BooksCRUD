@@ -1,0 +1,49 @@
+﻿@model Books.ViewModels.BookFormViewModel
+@{
+    ViewBag.Title = "create";
+}
+
+<h3 class="text-primary">
+    @(Model.id==0? "Add New Book":"Edit Book")
+</h3>
+<hr />
+@using (Html.BeginForm("save", "Books"))
+{
+    @Html.HiddenFor(m=>m.id)
+    @Html.AntiForgeryToken()
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Title, new { @class = "text-primary" })
+        @Html.TextBoxFor(m => m.Title, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Title, null, new { @class = "text-danger" })
+
+        @Html.LabelFor(m => m.Author, new { @class = "text-primary" })
+        @Html.TextBoxFor(m => m.Author, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Author, null, new { @class = "text-danger" })
+
+
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.categoryId)
+        @Html.DropDownListFor(m => m.categoryId, new SelectList(Model.categories, "id", "Name"), "", new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.categoryId, null, new { @class = "text-danger" })
+
+    </div>
+
+
+    @Html.LabelFor(m => m.Description, new { @class = "text-primary" })
+    @Html.TextAreaFor(m => m.Description, new { @class = "form-control" })
+    @Html.ValidationMessageFor(m => m.Description, null, new { @class = "text-danger" })
+     
+    <button type="submit" class="btn btn-primary">save </button>
+}
+
+@section scripts
+{
+
+     @Scripts.Render("~/ bundles / jqueryval")
+
+}
+
+
